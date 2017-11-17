@@ -15,7 +15,14 @@ pip install Pillow; \
 pip install "certifi==2015.04.28"; \
 pip install "PyExecJS==1.4.0";
 
-ADD ./data /data
+RUN mkdir -p /data
+RUN rm -rf twistd.pid
+
+ADD data/scrapyd.conf /root/.scrapyd.conf
 WORKDIR /data
-ENTRYPOINT ["sh", "start.sh"]
+
+VOLUME /data
+EXPOSE 6800
+
+ENTRYPOINT ["scrapyd"]
 
